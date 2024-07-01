@@ -1,0 +1,5 @@
+On the command line, enter the following commands:
+Don't forget to pip install streamlit, pip install transformers and other necessary libraries such as tensorflow, pandas, sklearn..
+1. python3 main.py
+2. streamlit run main.py
+To see deployed web app, do not use the Python Jupyter Notebook. Use a python script instead.
