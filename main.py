@@ -6,6 +6,81 @@ from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
+import streamlit as st
+from transformers import TFBertModel, BertTokenizer
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.layers import Layer
+from keras.metrics import RootMeanSquaredError
+
+bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+bert_model = TFBertModel.from_pretrained("bert-base-uncased")
+
+data = pd.read_csv("ielts_writing_dataset.csv")
+data.head()
+data = data[data['Overall'].map(data['Overall'].value_counts()) > 1]
+
+X = data["Essay"]
+y = data["Overall"]
+
+X_train, X_test, y_train, y_test = train_test_split(X.values, y, test_size=0.1, shuffle=True, stratify=y, random_state=42)
+X_train = bert_tokenizer(list(X_train), padding=True, truncation=True, return_tensors='tf', max_length = 512)['input_ids']
+X_test = bert_tokenizer(list(X_test), padding=True, truncation=True, return_tensors='tf', max_length = 512)['input_ids']
+
+reg = keras.Sequential([
+    layers.Flatten(),
+    layers.Dense(128, activation='relu'),
+    layers.Dropout(0.2),
+    layers.Dense(128, activation='relu'),
+    layers.Dropout(0.2),
+    layers.Dense(1, activation='softplus')
+])
+
+class TFBertModelWrapper(Layer):
+    def __init__(self, **kwargs):
+        super(TFBertModelWrapper, self).__init__(**kwargs)
+        self.bert_model = TFBertModel.from_pretrained('bert-base-uncased')
+
+    def call(self, input_ids, attention_mask=None, token_type_ids=None, **kwargs):
+        outputs = self.bert_model(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            token_type_ids=token_type_ids,
+            **kwargs
+        )
+        return outputs[0]
+
+input_ids = keras.layers.Input(shape=(512,), dtype=tf.int32)
+
+output = TFBertModelWrapper()(input_ids)
+pooling = output[:, 0, :]
+output_ids = reg(pooling)
+
+model = keras.Model(inputs = input_ids, outputs = output_ids)
+for layer in bert_model.layers:
+    layer.trainable = False
+
+model.compile(optimizer = "adam",
+             loss = "mean_squared_error",
+             metrics = [RootMeanSquaredError()])
+
+early_stopping = keras.callbacks.EarlyStopping(
+    patience=8,
+    min_delta=0,
+    monitor = "val_loss",
+    restore_best_weights=True,
+)
+
+history = model.fit(
+    X_train, y_train,
+    validation_data=(X_test, y_test),
+    batch_size=32,
+    epochs=50,
+    callbacks=[early_stopping],
+)
+history_df = pd.DataFrame(history.history)
+history_df.loc[:, ['loss', 'val_loss']].plot(title="val loss")
 
 data = pd.read_csv("ielts_writing_dataset.csv")
 data.head()
@@ -39,8 +114,8 @@ print("R2 Score of Random Forest =", round(r2_score(y_test, y_3), 2))
 
 def round_to_nearest_half(num):
   return round(num * 2) /2
-  
-import streamlit as st
+
+# Use Best Model (Fine-Tuned BERT)
 count = 0
 def main():
     global count
@@ -51,8 +126,9 @@ def main():
     user_input = st.text_input("You:", key=f"user_input_{count}")
 
     if user_input:
-        response = model_3.predict(Vectorizer.transform([user_input]).toarray())
-        st.text_area("Your score:", value=round_to_nearest_half(response[0]), height=101, max_chars=None, key=f"chatbot_response_{count}")
+        new_input_ids = bert_tokenizer(user_input, padding=True, truncation=True, return_tensors='tf', max_length=512)['input_ids']
+        response = model.predict(new_input_ids)
+        st.text_area("Your score:", value=round_to_nearest_half(response), height=101, max_chars=None, key=f"chatbot_response_{count}")
         st.write("Thank you!")
         st.stop()
 
