@@ -1,4 +1,4 @@
-# Grade IELTS with NLP and Machine Learning Algorithms
+# Grade IELTS with NLP and Machine Learning (Deep Learning)
 ## About
 This algorithm is trained on a dataset consisting of Essays and Overall IELTS Score for writing. It employs a TfidfVectorizer text feature extraction algorithm to convert text to numerical vector representation (Tokenization) which can be used as features for the machine learning algorithm. I tested the feature X and target y on three separate powerful Regression algorithms as well as a fine-tuned BERT pre-trained model to see which performs best. The Fine-Tuned BERT Model performs the best, achieving an RMSE of ```1.14```. Note that due to the nature of this task, it is difficult to predict the score accurately with ML algorithms. I then deployed this algorithm to a web application using the streamlit library, so that users may input their essays in an interactive interface and environment and obtain their deserving grades with the standard IELTS grading points.
 ## Run Instructions
