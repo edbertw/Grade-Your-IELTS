@@ -19,7 +19,7 @@ bert_model = TFBertModel.from_pretrained("bert-base-uncased")
 
 data = pd.read_csv("ielts_writing_dataset.csv")
 data.head()
-data = data[data['Overall'].map(data['Overall'].value_counts()) > 1]
+data = data[(data['Overall'].value_counts()) > 1]
 
 X = data["Essay"]
 y = data["Overall"]
