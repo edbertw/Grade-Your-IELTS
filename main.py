@@ -24,7 +24,7 @@ data = data[(data['Overall'].value_counts()) > 1]
 X = data["Essay"]
 y = data["Overall"]
 
-X_train, X_test, y_train, y_test = train_test_split(X.values, y, test_size=0.1, shuffle=True, stratify=y, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, shuffle=True, stratify=y, random_state=42)
 X_train = bert_tokenizer(list(X_train), padding=True, truncation=True, return_tensors='tf', max_length = 512)['input_ids']
 X_test = bert_tokenizer(list(X_test), padding=True, truncation=True, return_tensors='tf', max_length = 512)['input_ids']
 
@@ -54,7 +54,7 @@ class TFBertModelWrapper(Layer):
 input_ids = keras.layers.Input(shape=(512,), dtype=tf.int32)
 
 output = TFBertModelWrapper()(input_ids)
-pooling = output[:, 0, :]
+pooling = output.pooler_output
 output_ids = reg(pooling)
 
 model = keras.Model(inputs = input_ids, outputs = output_ids)
