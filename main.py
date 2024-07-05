@@ -31,9 +31,9 @@ X_test = bert_tokenizer(list(X_test), padding=True, truncation=True, return_tens
 reg = keras.Sequential([
     layers.Flatten(),
     layers.Dense(128, activation='relu'),
-    layers.Dropout(0.2),
-    layers.Dense(128, activation='relu'),
-    layers.Dropout(0.2),
+    layers.Dropout(0.3),
+    layers.Dense(64, activation='relu'),
+    layers.Dropout(0.3),
     layers.Dense(1, activation='softplus')
 ])
 
