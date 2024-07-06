@@ -12,7 +12,10 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.layers import Layer
-from keras.metrics import RootMeanSquaredError
+from keras.metrics import MeanAbsoluteError
+from sklearn.metrics import mean_absolute_error
+from keras.models import Sequential
+from keras.layers import Flatten, Dense, Dropout
 
 bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 bert_model = TFBertModel.from_pretrained("bert-base-uncased")
@@ -27,15 +30,23 @@ y = data["Overall"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, shuffle=True, stratify=y, random_state=42)
 X_train = bert_tokenizer(list(X_train), padding=True, truncation=True, return_tensors='tf', max_length = 512)['input_ids']
 X_test = bert_tokenizer(list(X_test), padding=True, truncation=True, return_tensors='tf', max_length = 512)['input_ids']
-
+'''
 reg = keras.Sequential([
     layers.Flatten(),
     layers.Dense(128, activation='relu'),
     layers.Dropout(0.3),
     layers.Dense(64, activation='relu'),
     layers.Dropout(0.3),
-    layers.Dense(1, activation='softplus')
+    layers.Dense(1, activation='linear')
 ])
+'''
+reg = Sequential()
+reg.add(Flatten())
+reg.add(Dense(64, activation='relu'))
+reg.add(Dropout(0.3))
+reg.add(Dense(32, activation='relu'))
+reg.add(Dropout(0.3))
+reg.add(Dense(1, activation='linear'))
 
 class TFBertModelWrapper(Layer):
     def __init__(self, **kwargs):
@@ -63,7 +74,7 @@ for layer in bert_model.layers:
 
 model.compile(optimizer = "adam",
              loss = "mean_squared_error",
-             metrics = [RootMeanSquaredError()])
+             metrics = ["mean_absolute_error"])
 
 early_stopping = keras.callbacks.EarlyStopping(
     patience=8,
@@ -81,6 +92,10 @@ history = model.fit(
 )
 history_df = pd.DataFrame(history.history)
 history_df.loc[:, ['loss', 'val_loss']].plot(title="val loss")
+history_frame.loc[:, ['mean_absolute_error', 'val_mean_absolute_error']].plot()
+
+y_pred = model.predict(X_test)
+print(mean_absolute_error(y_test, y_pred))
 
 data = pd.read_csv("ielts_writing_dataset.csv")
 data.head()
