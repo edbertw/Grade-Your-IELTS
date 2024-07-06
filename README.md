@@ -14,7 +14,7 @@ R2 Score of Random Forest = 0.25
 ```
 As seen, using standard Machine Learning algorithms have proven to be less effective. However, when we employed the fine-tuned BERT model with early stopping, a relatively high number of training epochs and other parameters, it achieved an RMSE of ```0.81```, which when comparing with the previous ML models, is much more precise. 
 
-We Fine Tuned the BERT model by feeding a Keras Object (Input Layer) to the pre-trained BERT model and obtaining its pooling output. We used this as an input to the self-designed neural network which outputs a single value using the softmax activation function (Network Design = (128 (RelU),64 (RelU) ,1 (SoftMax)) and some dropout layers to prevent overfitting and increase generalization to new data. We then created the final model and made it so that the layers from BERT will be unchanged and untrainable during the model fitting and training process.
+We Fine Tuned the BERT model by feeding a Keras Object (Input Layer) to the pre-trained BERT model and obtaining its pooling output. We used this as an input to the self-designed neural network which outputs a single value using the linear activation function (Network Design = (128 (RelU),64 (RelU) ,1 (linear)) and some dropout layers to prevent overfitting and increase generalization to new data. We then created the final model and made it so that the layers from BERT will be unchanged and untrainable during the model fitting and training process.
 
 Same as before (during training and fitting), for any new text (essays) grade that is to be predicted by the model, it is first tokenized with the BertTokenizer function from the transformers library.
 
