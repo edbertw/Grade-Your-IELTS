@@ -92,7 +92,7 @@ history = model.fit(
 )
 history_df = pd.DataFrame(history.history)
 history_df.loc[:, ['loss', 'val_loss']].plot(title="val loss")
-history_frame.loc[:, ['mean_absolute_error', 'val_mean_absolute_error']].plot()
+history_df.loc[:, ['mean_absolute_error', 'val_mean_absolute_error']].plot()
 
 y_pred = model.predict(X_test)
 print(mean_absolute_error(y_test, y_pred))
