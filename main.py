@@ -18,7 +18,6 @@ from keras.models import Sequential
 from keras.layers import Flatten, Dense, Dropout
 
 bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-bert_model = TFBertModel.from_pretrained("bert-base-uncased")
 
 data = pd.read_csv("ielts_writing_dataset.csv")
 data.head()
