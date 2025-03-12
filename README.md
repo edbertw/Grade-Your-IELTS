@@ -10,4 +10,7 @@ MAE of BERT + untrained head = 0.694
 R2 Score of fine-tuned DistilBERT = 0.491
 MAE of fine-tuned DistilBERT = 0.514
 ```
+Fine-Tuned DistilBERT is best performing.
 
+## Future work
+Fine-tuning BERT base uncased (may be computationally expensive)
