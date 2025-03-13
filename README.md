@@ -9,6 +9,8 @@ R2 Score of BERT + untrained head = 0.3063
 MAE of BERT + untrained head = 0.694
 R2 Score of fine-tuned DistilBERT = 0.491
 MAE of fine-tuned DistilBERT = 0.514
+R2 Score of fine-tuned RoBERTa = ?? (Require further evaluation)
+MAE of fine-tuned RoBERTa = ?? (Require further evaluation)
 ```
 Fine-Tuned DistilBERT is best performing.
 
