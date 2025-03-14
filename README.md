@@ -18,8 +18,11 @@ MAE of fine-tuned RoBERTa = 0.717
 R2 Score of fine-tuned BERT = 0.468
 MAE of fine-tuned BERT = 0.6091
 
-R2 Score of fine-tuned DeBERTa = 0.5057
+R2 Score of fine-tuned DeBERTa V3 = 0.5057
 MAE of fine-tuned DeBERTa = 0.5759
+
+R2 Score of fine-tuned ALBERT V2 = 0.0683
+MAE of fine-tuned ALBERT V2 = 0.76443
 ```
 Fine-Tuned DeBERTa is best performing.
 
