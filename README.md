@@ -15,10 +15,11 @@ MAE of fine-tuned DistilBERT = 0.6386
 R2 Score of fine-tuned RoBERTa = 0.2414
 MAE of fine-tuned RoBERTa = 0.717
 
-R2 Score of fine-tuned BERT =
-MAE of fine-tuned BERT =
+R2 Score of fine-tuned BERT = 0.468
+MAE of fine-tuned BERT = 0.6091
+
 ```
-Fine-Tuned DistilBERT is best performing.
+Fine-Tuned BERT is best performing.
 
 ## Future work
 Fine-tuning BERT base uncased (may be computationally expensive)
