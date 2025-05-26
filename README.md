@@ -9,7 +9,7 @@ Welcome to **Grade Your IELTS**, an open-source project that leverages advanced 
 - **Automatic Grading of IELTS Writing Tasks**
 - **Multiple ML and Transformer Models** evaluated (Linear Regression, SVR, Random Forest, BERT variants, etc.)
 - **State-of-the-art Fine-Tuned DeBERTa V3** Deployed for Best Performance
-- **Interactive Web UI** powered by Dash for easy experimentation
+- **Interactive Web UI Prototype** powered by both Dash and Streamlit for easy experimentation
 - **Transparent Metrics** for all models and approaches
 
 ---
@@ -34,36 +34,7 @@ Welcome to **Grade Your IELTS**, an open-source project that leverages advanced 
 
 ## 🖥️ Live Demo
 
-The app is deployed as an interactive web tool using [Dash](https://dash.plotly.com/). Users can input IELTS Writing essays and receive instant scores and feedback.
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/edbertw/Grade-Your-IELTS.git
-cd Grade-Your-IELTS
-```
-
-### 2. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Download/Prepare Model Weights
-
-Download the fine-tuned DeBERTa V3 weights and place them in the appropriate directory as specified in the code/configuration.
-
-### 4. Run the Dash App
-
-```bash
-python app.py
-```
-
-The app will run locally at `http://127.0.0.1:8050/` by default.
+The app is deployed as an interactive web tool using [Dash](https://dash.plotly.com/) and [Streamlit](https://streamlit.io/). Users can input IELTS Writing essays and receive instant scores and feedback.
 
 ---
 
@@ -71,12 +42,16 @@ The app will run locally at `http://127.0.0.1:8050/` by default.
 
 ```
 Grade-Your-IELTS/
-├── app.py                # Dash web app entry point
-├── model/                # ML & Transformer model code and weights
-├── data/                 # Data processing scripts and datasets
-├── requirements.txt      # Python dependencies
-├── utils/                # Helper functions
-└── README.md
+├── IELTS_Grading_With_Custom_NN_BERT.ipynb # Custom Neural Network with BERT
+├── IELTS_Grading_with_ALBERT-BASE.ipynb # Grading with ALBERT
+├── IELTS_Grading_with_DeBERTa.ipynb # Grading with DeBERTa (Best Performing)
+├── IELTS_Grading_with_DistilBERT.ipynb # Grading with DistilBERT
+├── IELTS_Grading_with_Fine-Tuned_BERT-BASE.ipynb # Fine-Tuned BERT Grading
+├── IELTS_Grading_with_RoBERTa-BASE.ipynb # Grading with RoBERTa
+├── IELTS_Grading_with_ML.py # Baseline ML Models (Linear Regression, SVR, Random Forest)
+├── ielts_writing_dataset.csv # Dataset
+├── README.md # Repository Documentation
+└── sampleRun.png # Sample Output Screenshot
 ```
 
 ---
@@ -113,8 +88,8 @@ This project is licensed under the MIT License.
 ## 🙏 Acknowledgements
 
 - [HuggingFace Transformers](https://huggingface.co/) for pre-trained models
-- [Dash by Plotly](https://dash.plotly.com/) for the web framework
-- The open-source community for sample datasets and inspiration
+- [Dash by Plotly](https://dash.plotly.com/) and [Streamlit](https://streamlit.io/) for the web framework
+- The open-source Kaggle community for sample datasets and inspiration
 
 ---
 
