@@ -61,7 +61,7 @@ Grade-Your-IELTS/
 - **Data Preprocessing:** Essay cleaning, tokenization, and feature engineering.
 - **Model Training:** Traditional ML (Linear Regression, SVR, Random Forest) and Transformer approaches (BERT, DistilBERT, RoBERTa, DeBERTa, ALBERT).
 - **Evaluation Metrics:** R<sup>2</sup> score for regression quality, Mean Absolute Error (MAE) for grading accuracy.
-- **Deployment:** Best model (Fine-tuned DeBERTa V3) is wrapped in a Dash app for real-world use.
+- **Deployment:** Best model (Fine-tuned DeBERTa V3) is wrapped in a Dash and Streamlit (Your choice which to use!) app for real-world use.
 
 ---
 
